@@ -1,0 +1,162 @@
+﻿@using Domain.Models
+@model BudgetModel
+@{
+    ViewData["Title"] = "PLAN BUDŻETU";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="subpage__frame">
+    <div class="info__section">
+        <div class="text__data text-margin-plan sm-first-plan">
+            <h5 class="header__data">
+                Zaplanowane wpływy:
+            </h5>
+            <h4 class="data income mt-3">
+                @Model.PlannedIncomes zł
+            </h4>
+        </div>
+        <div class="chart__field sm-fourth-plan">
+            <script>
+                var Incomes = @Html.Raw(Json.Serialize(@Model.PlannedIncomes));
+                var Spends = @Html.Raw(Json.Serialize(@Model.PlannedExpenses));
+            </script>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="text__data sm-second-plan text-margin-plan">
+            <h5 class="header__data">
+                Zaplanowane wydatki:
+            </h5>
+            <h4 class="data spend mt-3">
+                @Model.PlannedExpenses zł
+            </h4>
+        </div>
+        <div class="vertical__bar sm-plan-none"></div>
+        <div class="text__data text-margin-plan sm-third-plan">
+            <h5 class="header__data">
+                Niezaplanowane środki:
+            </h5>
+            <h4 class="data mt-3">
+                @(Model.PlannedIncomes - Model.PlannedExpenses) zł
+            </h4>
+        </div>
+    </div>
+    <div class="option__section mb-4">
+        <div class="operations__button__holder">
+            <button type="button" class="option__button extra-spacing" onclick="location.href='@Url.Action("Create", "MainCategory")'">Dodaj kategorię</button>
+            <button type="button" class="option__button" onclick="location.href='@Url.Action("Create", "Category")'">Dodaj podkategorię</button>
+        </div>
+        <div class="filter__button">
+            <form asp-controller="Home" asp-action="BudgetPlan" method="get" id="filters" class="option__button filter filter__holder">
+                @Html.DropDownList("Year", (SelectList)ViewBag.Years, "Wybierz rok", new { @class = "form-control" })
+                <button type="submit" form="filters" class="button__search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <table class="table table-shadow mt-4">
+        <thead>
+            <tr>
+                <th>Nazwa</th>
+                <th>Miesięcznie</th>
+                <th>Rocznie</th>
+                <th class="sm-none">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mainCategory in @Model.MainCategories)
+            {
+                <tr class="standard__row">
+                    <td class="bold one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "MainCategory", new { id = mainCategory.Id })';">
+                        @mainCategory.Name
+                    </td>
+                    <td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "MainCategory", new { id = mainCategory.Id })';">
+                    </td>
+                    <td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "MainCategory", new { id = mainCategory.Id })';">
+                    </td>
+                    <td class="one__fourth sm-none">
+                        <div class="dropdown">
+                            <button class="options__button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown__bootstrap__options" aria-labelledby="dropdownMenuButton">
+                                <a asp-action="Edit" asp-controller="MainCategory" class="text-white submenu__text border-0" asp-route-id="@mainCategory.Id">Edytuj</a>
+                                <a asp-action="Details" asp-controller="MainCategory" class="text-white submenu__text border-0" asp-route-id="@mainCategory.Id">Szczegóły</a>
+                                <a asp-action="Delete" asp-controller="MainCategory" class="text-white submenu__text border-0" asp-route-id="@mainCategory.Id">Usuń</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                @foreach (var category in Model.Categories)
+                {
+                    @if (mainCategory.Id == category.MainCategoryId)
+                    {
+                        <tr class="standard__row clickable">
+                            <td class="one__fourth" onclick="window.location.href = '@Url.Action("Details", "Category", new { id = category.Id })';">
+                                @category.Name
+                            </td>
+                            <td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "Category", new { id = category.Id })';">
+                                @if (category.Type == 0)
+                                {
+                                    <span class="spend">@category.Value zł</span>
+                                }
+                                else
+                                {
+                                    <span class="income">@category.Value zł</span>
+
+                                }
+                            </td>
+                            <td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "Category", new { id = category.Id })';">
+                                @if (category.OneOrMonth == true)
+                                {
+                                    @if (category.Type == 0)
+                                    {
+                                        <span class="spend">@(category.Value * (13 - DateTime.Now.Month)) zł</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="income">@(category.Value * (13 - DateTime.Now.Month)) zł</span>
+
+                                    }
+                                }
+                                else
+                                {
+                                    @if (category.Type == 0)
+                                    {
+                                        <span class="spend">@category.Value zł</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="income">@category.Value zł</span>
+
+                                    }
+                                }
+                            </td>
+                            <td class="options sm-none">
+                                <div class="dropdown">
+                                    <button class="options__button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown__bootstrap__options" aria-labelledby="dropdownMenuButton">
+                                        <a asp-action="Edit" asp-controller="Category" class="text-white submenu__text border-0" asp-route-id="@category.Id">Edytuj</a>
+                                        <a asp-action="Details" asp-controller="Category" class="text-white submenu__text border-0" asp-route-id="@category.Id">Szczegóły</a>
+                                        <a asp-action="Delete" asp-controller="Category" class="text-white submenu__text border-0" asp-route-id="@category.Id">Usuń</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/Home/barChart.js" asp-append-version="true"></script>

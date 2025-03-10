@@ -1,0 +1,90 @@
+﻿@model 			Account
+
+@{
+    ViewData["Title"] = "DODAJ KONTO";
+}
+
+
+<div class="form__container__smaller d-sm-flex d-md-flex d-lg-flex d-xl-none d-xxl-none">
+	<div class="sm-form-holder">
+		<div class="row login__section">
+			<section class="login__frame">
+				<form asp-action="Create" method="post">
+					<input asp-for="Blockade" type="number" class="form-control" value="0" type="hidden" />
+					<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Nazwa
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-4">
+						<input asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Opis
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-3">
+						<input asp-for="Description" class="form-control" />						
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Wartość
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-3">
+						<input asp-for="Value" type="number" class="form-control" />
+						<span asp-validation-for="Value" class="text-danger"></span>
+					</div>
+					<div>
+						<button id="login-submit" type="submit" class="w-100 btn btn-lg login__button__main">Dodaj</button>
+					</div>
+				</form>
+			</section>
+		</div>
+	</div>
+</div>
+<div class="standard__form sm-none d-sm-none d-md-none d-lg-none d-xl-flex d-xxl-flex">
+	<div class="form__frame">
+        <div class="x__section">
+            <a asp-action="Index" class="x-button">X</a>
+        </div>
+        <h5 class="header__data__form mt-4 mb-5">Utwórz nowe konto</h5>
+        <form asp-action="Create" class="form__section">
+            <input asp-for="Blockade" type="number" class="form-control" value="0" type="hidden" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group half">
+                <label asp-for="Name" class="control-label m__left">Nazwa</label>
+                <input asp-for="Name" class="form-control dual" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group half">
+                <label asp-for="Description" class="control-label m__left">Opis</label>
+                <input asp-for="Description" class="form-control dual" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="full">
+                <div class="form-group full__width mb-5">
+                    <label asp-for="Value" class="control-label">Wartość</label>
+                    <input asp-for="Value" type="number" class="form-control single" />
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group mb-4">
+                <input type="submit" value="Dodaj" class="form__button" />
+            </div>
+        </form>
+    </div>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+
+</div>
+
+

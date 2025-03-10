@@ -1,0 +1,291 @@
+﻿@using Domain.Enums
+@using Domain.Models
+@model BudgetModel
+
+@{
+    ViewData["Title"] = "BILANS ROCZNY";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal CurrentSpend = 0;
+    DateTime currentyear = DateTime.Now;
+}
+
+<div class="subpage__frame">
+    <div class="info__section">
+        <div class="text__data text-margin-plan sm-first-plan">
+            <h5 class="header__data">
+                Wpływy łącznie:
+            </h5>
+            <h4 class="data income mt-3">
+                @Model.Incomes zł
+            </h4>
+        </div>
+        <div class="chart__field sm-fourth-plan">
+            <script>
+                var Incomes = @Html.Raw(Json.Serialize(@Model.Incomes));
+                var Spends = @Html.Raw(Json.Serialize(@Model.Expenses));
+            </script>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="text__data sm-second-plan text-margin-plan">
+            <h5 class="header__data">
+                Wydatki łącznie:
+            </h5>
+            <h4 class="data spend mt-3">
+                @Model.Expenses zł
+            </h4>
+        </div>
+        <div class="vertical__bar sm-plan-none"></div>
+        <div class="text__data text-margin-plan sm-third-plan">
+            <h5 class="header__data">
+                Bilans roku:
+            </h5>
+            <h4 class="data mt-3">
+                @(Model.Incomes - Model.Expenses) zł
+            </h4>
+        </div>
+    </div>
+    <div class="option__section mt-4 mb-4">
+        <div>
+        </div>
+        <form asp-controller="Home" asp-action="BudgetStatus" method="get" id="filters" class="filter__holder">
+            @Html.DropDownList("Year", (SelectList)ViewBag.Years, "Wybierz rok", new { @class = "form-control option__button__search extra-spacing-search" })
+            @Html.DropDownList("Month", Html.GetEnumSelectList<Months>(), "Miesiąc", new { @class = "form-control option__button__search" })
+            <button type="submit" form="filters" class="button__search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+            </button>
+        </form>
+    </div>
+    <table class="table table-shadow mt-4">
+        <thead>
+            <tr >
+                <th>Nazwa</th>
+                <th>Wydano | Zarobiono</th>
+                <th class="sm-plan-none">Budżet roczny</th>
+                <th>Pozostało</th>
+                <th class="sm-plan-none">Miesięcznie</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var mainCategory in @Model.MainCategories)
+            {
+                <tr class="standard__row">
+                    <td class="bold">
+                        @mainCategory.Name
+                    </td>
+                    <td>
+                    </td>
+                    <td class="sm-plan-none">
+                    </td>
+                    <td>
+                    </td>
+                    <td class="sm-plan-none">
+                    </td>
+                </tr>
+                @foreach (var category in Model.Categories)
+                {
+                    @if (mainCategory.Id == category.MainCategoryId)
+                    {
+                        CurrentSpend = 0;
+                        <tr class="standard__row">
+                            <td>
+                                @category.Name
+                            </td>
+                            <td>
+                                <!-- wydano|zarobiono-->
+                                @foreach (var operation in Model.Operations)
+                                {
+                                    @if (operation.CategoryId == category.Id) 
+                                    {
+                                        CurrentSpend += operation.Value;
+                                    }
+                                }
+                                @if (category.Type == 0)
+                                {
+                                    <span class="spend">@CurrentSpend zł</span>
+                                }
+                                else
+                                {
+                                    <span class="income">@CurrentSpend zł</span>
+
+                                }
+                            </td>
+                            <!-- budżet roczny -->
+                            <td class="sm-plan-none">
+                                @if (category.OneOrMonth == true)
+                                {
+                                    @if (category.Type == 0)
+                                    {
+                                        <span class="spend">@(category.Value * (13 - DateTime.Now.Month)) zł</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="income">@(category.Value * (13 - DateTime.Now.Month)) zł</span>
+
+                                    }
+                                }
+                                else
+                                {
+                                    @if (category.Type == 0)
+                                    {
+                                        <span class="spend">@category.Value zł</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="income">@category.Value zł</span>
+
+                                    }
+                                }
+                            </td>
+                            <!-- pozostało -->
+                            <td>
+                                @if (category.OneOrMonth == true) //coroczny
+                                {
+                                    @if (category.Type == 0) //wydatek
+                                    {
+                                        if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) > 0)//jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="spend">+&nbsp;@(category.Value * (13 - DateTime.Now.Month) - CurrentSpend)&nbsp;zł</span>
+                                        }
+                                        else if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) < 0)// jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="spend">-&nbsp;@((-1) * ((category.Value * (13 - DateTime.Now.Month)) - CurrentSpend))&nbsp;zł</span>
+                                        }
+                                        else //jeśli 0
+                                        {
+                                            <span class="spend">0&nbsp;zł</span>
+                                        }
+                                    }
+                                    else //wpływ
+                                    {
+                                        if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) > 0)//jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="income">-&nbsp;@((category.Value * (13 - DateTime.Now.Month)) - CurrentSpend)&nbsp;zł</span>
+
+                                        }
+                                        else if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) < 0) // jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="income">+&nbsp;@((-1)*((category.Value * (13 - DateTime.Now.Month)) - CurrentSpend))&nbsp;zł plus</span>
+                                        }
+                                        else 
+                                        {
+                                            <span class="income">0&nbsp;zł</span>
+                                        }
+                                    }
+                                }
+                                else //jednorazowy
+                                {
+                                    @if (category.Type == 0) //wydatek
+                                    {
+                                        if ((category.Value - CurrentSpend) > 0) //jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="spend"> +&nbsp;@(category.Value - CurrentSpend)&nbsp;zł</span>
+
+                                        }
+                                        else if ((category.Value - CurrentSpend) < 0)// jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="spend">-&nbsp;@((-1) * (category.Value - CurrentSpend))&nbsp;zł</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="spend">0&nbsp;zł</span>
+                                        }
+                                    }
+                                    else //wpływ
+                                    {
+                                        if ((category.Value - CurrentSpend) >0) //jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="income"> -&nbsp;@(category.Value - CurrentSpend)&nbsp;zł</span>
+
+                                        }
+                                        else if ((category.Value - CurrentSpend) < 0)// jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="income">+&nbsp;@((-1) * (category.Value - CurrentSpend))&nbsp;zł</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="income">0&nbsp;zł</span>
+                                        }
+                                    }
+                                }
+                            </td>
+                            <td class="sm-plan-none">
+                                @if (category.OneOrMonth == true) //coroczny
+                                {
+                                    @if (category.Type == 0) //wydatek
+                                    {
+                                        if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) > 0)//jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="spend">+&nbsp;@Math.Round(((category.Value * (13 - DateTime.Now.Month) - CurrentSpend)/ (13 - currentyear.Month)),2) zł</span>
+                                        }
+                                        else if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) < 0)// jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="spend">-&nbsp;@Math.Round(((-1) * ((category.Value * (13 - DateTime.Now.Month)) - CurrentSpend))/ (13 - currentyear.Month)),2)&nbsp;zł</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="spend">0&nbsp;zł</span>
+                                        }
+                                    }
+                                    else //wpływ
+                                    {
+                                        if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) > 0)//jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="income">-&nbsp;@Math.Round((((category.Value * (13 - DateTime.Now.Month)) - CurrentSpend)/ (13 - currentyear.Month)),2)&nbsp;zł</span>
+                                        }
+                                        else if ((category.Value * (13 - DateTime.Now.Month) - CurrentSpend) < 0)// jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="income">+&nbsp;@Math.Round((((-1) * ((category.Value * (13 - DateTime.Now.Month)) - CurrentSpend))/ (13 - currentyear.Month)),2)&nbsp;zł</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="income">0&nbsp;zł</span>
+                                        }
+                                    }
+                                }
+                                else //jednorazowy
+                                {
+                                    @if (category.Type == 0) //wydatek
+                                    {
+                                        if ((category.Value - CurrentSpend) > 0) //jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="spend"> +&nbsp;@Math.Round(((category.Value - CurrentSpend)/ (13 - currentyear.Month)),2)&nbsp;zł</span>
+
+                                        }
+                                        else if ((category.Value - CurrentSpend) < 0) // jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="spend">-&nbsp;@Math.Round((((-1) * (category.Value - CurrentSpend))/ (13 - currentyear.Month)))&nbsp;zł</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="spend">0&nbsp;zł</span>
+                                        }
+                                    }
+                                    else //wpływ
+                                    {
+                                        if ((category.Value - CurrentSpend) > 0) //jeśli wartość jest mniejsza niż planowany budżet roczny
+                                        {
+                                            <span class="income"> -&nbsp;@Math.Round(((category.Value - CurrentSpend)/ (13 - currentyear.Month)))&nbsp;zł</span>
+
+                                        }
+                                        else if ((category.Value - CurrentSpend) < 0) // jeli wartość jest większa niż planowany budżet rozczny
+                                        {
+                                            <span class="income">+&nbsp;@Math.Round((((-1) * (category.Value - CurrentSpend))/ (13 - currentyear.Month)))&nbsp;zł</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="income">0&nbsp;zł</span>
+                                        }
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/Home/barChart.js" asp-append-version="true"></script>

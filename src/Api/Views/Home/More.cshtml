@@ -1,0 +1,164 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+}
+
+<div class="home__page__container">
+    <div class="header__section__home">
+        <div class="top__section__upper__home">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home">
+                    <div class="icon__holder__home">
+                        <img class="logo" src="/logoBM.png" alt="Budget plan icon">
+                    </div>
+                </a>
+                <div class="login__buttons">
+                    <partial name="_LoginPartialWhite" />
+                </div>
+        </div>
+        <div class="pos-f-t w-100 none">
+            <nav class="navbar navbar-dark w-100">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home m-left">
+                    <div class="icon__holder__home">
+                        <img class="logo__dropdown" src="/logoBM.png" alt="Budget plan icon">
+                    </div>
+                </a>
+                <button class="navbar-toggler m-right" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="w-100">
+                    <partial name="_LoginPartialWhite" />
+                </div>
+            </div>
+        </div>
+                <div class="more__holder">
+                    <div class="more__header">
+                        Jak prowadzić budżet domowy?
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="sub__section">
+        <div class="header__section__more more__subheader">
+            <div class="home__text__more w-100">
+                Utworzenie nowego konta użytkownika.
+                </div>
+            <div class="home__text__more__small w-100">
+                Czyli początek Twojej przygody z&nbsp;Budget Manager.
+            </div>
+        </div>
+        <div class="more__page_text__small mt-4">
+            Witamy na naszej stronie! <br>
+            Cieszymy się, że wraz z&nbsp;nami chcesz kontrolować swój budżet. Żeby zacząć, musisz stworzyć swoje konto (umożliwia to przycisk Rejestracja w&nbsp;prawym górnym rogu strony).<br><br>
+            Dzięki stworzeniu swojego konta, zdobędziesz możliwość szybkiego analizowania wszystkich źródeł i&nbsp;zobowiązań finansowych w&nbsp;jednym miejscu. Bez względu, gdzie jesteś oraz na jakim urządzeniu włączysz BM, pomożemy Ci zachować porządek i&nbsp;efektowanie zarządzać Twoimi finansami.<br><br>
+
+            Jak stworzyć nowe konto?<br>
+            Jest to bardzo proste. Przejdź do Rejestracji oraz wypełnij formularz (podaj swój adres e-mail, hasło oraz potwierdź hasło, następnie potwierdź swój adres e-mail) lub skorzystaj z&nbsp;rejestracji z&nbsp;użyciem konta Google (zarejestruj się z&nbsp;użyciem konta a&nbsp;następnie utwórz hasło do nowego konta).<br><br>
+
+            Od teraz możesz cieszyć się korzyściami, jakimi obdarza Cię strona Budget Manager!
+        </div>
+        <div class="header__section__more more__subheader">
+            <div class="home__text__more w-100">
+            Dodawanie Twoich operacji.
+            </div>
+            <div class="home__text__more__small w-100">
+            Czyli szybkie i&nbsp;skuteczne śledzenie Twoich pieniędzy.
+            </div>
+        </div>
+        <div class="more__page_text__small mt-4">
+        Nasza strona umożliwi Ci sprawnie monitorowanie Twoich wpływów i&nbsp;wydatków. Dzięki udostępnionym przez nas narzędziom, będziesz mieć pełną kontrolę nad swoimi finansami. Dzięki temu będziesz mógł lepiej podejmować decyzje o&nbsp;zarządzaniu Twoim budżetem.
+        Możesz w&nbsp;łatwy sposób dodawać każdą transakcję. Przy ich dodawaniu, masz możliwość dodawania ich do określonych grup transakcji (żywność, transport, rozrywka itd.).
+        Jeżeli posiadasz stałe wydatki lub dochody, możesz łatwo ustawić powtarzające się transakcje, co zdecydowanie zaoszczędzi Twój czas.<br> <br>
+
+        Dodawanie operacji -&nbsp;jak to działa?<br>
+        Przejdź do Operacji i&nbsp;wybierz opcję Dodaj nowy wydatek lub Dodaj nowy wpływ.<br>
+        Podaj wszystkie istotne dane na temat dodawanej operacji.<br>
+        Dodaj nową operację. <br>
+
+        Od teraz Twoja transakcja powinna być widoczna na liście wszystkich operacji. W&nbsp;razie wprowadzenia błędnych danych, każdej chwili możesz je edytować.
+
+        </div>
+        <div class="more__image">
+            <img class="m-image" src="/operations_screen.png" alt="Zrzut ekranu przedstawiający operacje">
+        </div>
+    <div class="header__section__more more__subheader">
+        <div class="home__text__more w-100">
+            Dodawanie nowego celu oszczędnościowego
+        </div>
+        <div class="home__text__more__small w-100">
+            Spełniaj marzenia dzięki skutecznemu planowaniu.
+        </div>
+    </div>
+    <div class="more__page_text__small mt-4">
+        Na naszej stronie zapewniamy Ci możliwość tworzenia nowych celów oszczędnościowych. Dzięki temu, będziesz efektywniej zarządzać swoimi finansami oraz szybciej osiągniesz swój cel, co jeszcze bardziej będzie motywować Cię do regularnego oszczędzania. Nie ważne, czy planujesz zakup nowego samochodu, podróż wakacyjną czy szybszą spłatę kredytu. Pomożemy Ci śledzić Twój postęp w&nbsp;spełnianiu marzeń. <br><Br>
+        Jak to działa?<br>
+        1.	Wejdź w Oszczędności i&nbsp;wybierz Dodaj nowy cel.<br>
+        2.	Wypełnij formularz i&nbsp;naciśnij przycisk Dodaj.<br>
+        3.	Twój cel został utworzony.
+    </div>
+    <div class="more__image">
+        <img class="m-image" src="/savings_screen.png" alt="Zrzut ekranu przedstawiający cele finansowe">
+    </div>
+    <div class="header__section__more more__subheader">
+        <div class="home__text__more w-100">
+            Bilans roczny
+        </div>
+        <div class="home__text__more__small w-100">
+            Sprawdź, jak zagospodarowałeś swój ostatni rok.
+        </div>
+    </div>
+    <div class="more__page_text__small mt-4">
+        Sprawdź, w&nbsp’jaki sposób zagospodarowałeś swoje środki w&nbsp;danym miesiącu lub roku. Przeanalizuj każdą kategorię i&nbsp;zobacz, na co wydajesz najwięcej swoich pieniędzy lub z&nbsp;jakiego źródła otrzymujesz największe przychody. Dzięki wykresowi u&nbsp;góry strony będziesz mógł zobaczyć, Ile łącznie zarobiłeś, a&nbsp;ile wydałeś.<br><br>
+        Dzięki tej opcji będziesz mógł skonfrontować swoje pierwotne cele finansowe z&nbsp;tymi rzeczywistymi. Pomoże Ci to ocenić, czy Twoje plany zostały zrealizowane lub przeanalizować, które obszary gospodarowania wymagają poprawy.
+    </div>
+    <div class="more__image">
+        <img class="m-image" src="/year_screen.png" alt="Zrzut ekranu przedstawiający cele finansowe">
+    </div>
+    <div class="header__section__more more__subheader">
+        <div class="home__text__more w-100">
+            Plan budżetowy
+        </div>
+        <div class="home__text__more__small w-100">
+            Zaplanuj swój rok!
+        </div>
+    </div>
+    <div class="more__page_text__small mt-4">
+        Dzięki tej opcji z&nbsp;góry możesz określić, ile chcesz przeznaczyć na różne kategorie wydatków (mieszkanie, jedzenie, rozrywka itd.). Pomoże Ci to kontrolować wydatki oraz uniknąć sytuacji, w&nbsp;której wydatki przekraczają dochody. W&nbsp;łatwy sposób zrozumiesz swoje możliwości finansowe oraz będziesz podejmować bardziej świadome wybory. <br><br>
+        Swoje zaplanowane transakcje możesz grupować w różne podkategorie, a&nbsp;te w&nbsp;kategorie. Możesz dodawać nowe kategorie, lub usuwać te, z&nbsp;których nie korzystasz. Dzięki nim, w przejrzysty sposób będziesz mógł kontrolować, gdzie trafiają Twoje pieniądze.<br><br>
+        Dodawać je możesz w&nbsp;Planie budżetu. Po utworzeniu, zostaną wyświetlone w liście.
+
+    </div>
+    <div class="more__image">
+        <img class="m-image" src="/plan_screen.png" alt="Zrzut ekranu przedstawiający cele finansowe">
+    </div>
+    </div>
+    <div class="footer__home">
+        <div class="footer__frame">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home__footer width-30 small3 footer__logo">
+                <div class="icon__holder__nav">
+                    <img class="logo" src="/logoBM.png" alt="Budget plan icon">
+                    <div class="full small mt-1">BudgetManager 2024</div>
+                </div>
+            </a>
+            <div class="footer__links">
+                <div class="center__links small1">
+                    <div class="full-left">
+                        <a class="text-light" asp-controller="Home" asp-action="Contact">KONTAKT</a>
+                    </div>
+                    <div class="full-left mt-2">
+                        <a class="text-light" asp-controller="Home" asp-action="Rules">ZASADY I REGULACJE</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__links small2">
+                <div class="full justify__footer">
+                    <div class="small">Praca inżynierska WSB Merito<br /> Autorzy: <br />Patrycja Wojtczak <br />Grzegorz Wanat<br />Mateusz Uryzaj</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+

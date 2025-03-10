@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+}
+
+<div class="home__page__container">
+    <div class="header__section__home">
+        <div class="top__section__upper__home">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home">
+                <div class="icon__holder__home">
+                    <img class="logo" src="/logoBM.png" alt="Budget plan icon">
+                </div>
+            </a>
+            <div class="login__buttons">
+                <partial name="_LoginPartialWhite" />
+            </div>
+        </div>
+        <div class="pos-f-t w-100 none">
+            <nav class="navbar navbar-dark w-100">
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home m-left">
+                    <div class="icon__holder__home">
+                        <img class="logo__dropdown" src="/logoBM.png" alt="Budget plan icon">
+                    </div>
+                </a>
+                <button class="navbar-toggler m-right" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </nav>
+            <div class="collapse" id="navbarToggleExternalContent">
+                <div class="w-100">
+                    <partial name="_LoginPartialWhite" />
+                </div>
+            </div>
+        </div>
+        <div class="more__holder">
+            <div class="more__header">
+                Po co kontrolować swój budżet domowy?
+            </div>
+        </div>
+    </div>
+</div>
+<div class="sub__section">
+    <div class="more__page_text__small mt-4">
+        <span class="no-bold">
+            Kontrolowanie budżetu domowego to ważna praktyka, która przynosi wiele korzyści. Wraz z nią wzrasta Twoja świadomość co do Twoich możliwości finansowych. Wraz z&nbsp;tym możesz dążyć do osiągnięcia stabilności finansowej.<br><br>
+        </span>
+        Warto kontrolować swoje finanse, ponieważ:<br><br>
+        •	Posiadasz kontrolę nad swoimi transakcjami.<br>
+        <span class="no-bold">
+        Kontrolowanie swoich transakcji pozwala ściśle określić, gdzie trafiają Twoje pieniądze, a&nbsp;to umożliwia efektowniejsze wydawanie oraz zwiększa możliwość ich zaoszczędzenia.<br />
+        </span>
+        •	Posiadasz większą możliwość zaoszczędzenia pieniędzy.<br>
+        <span class="no-bold">
+            Budżetowanie pomaga zidentyfikować obszary, w&nbsp;których można zaoszczędzić.<br>
+        </span>
+        •	Minimalizujesz możliwość zadłużenia.<br>
+        <span class="no-bold">
+        Świadomość finansowa pozwala na uniknięcie możliwości zadłużenia. W przejrzysty sposób widać, ile możesz wydać, nie narażając się na powstanie długów.<br>
+        </span>
+        •	 Planujesz na przyszłość.<br>
+        <span class="no-bold">
+        Kontrolowanie finansów zwiększa możliwość odłożenia wystarczającej sumy pieniędzy na ważne dla Ciebie cele (zakup nieruchomości, emerytura, edukacja dzieci itd.).
+        </span>
+    </div>
+    <div class="more__image mb-5">
+        <img class="h-image" src="/login.png" alt="Zrzut ekranu przedstawiający operacje">
+    </div>
+</div>
+<div class="footer__home">
+    <div class="footer__frame">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home__footer width-30 small3 footer__logo">
+            <div class="icon__holder__nav">
+                <img class="logo" src="/logoBM.png" alt="Budget plan icon">
+                <div class="full small mt-1">BudgetManager 2024</div>
+            </div>
+        </a>
+        <div class="footer__links">
+            <div class="center__links small1">
+                <div class="full-left">
+                    <a class="text-light" asp-controller="Home" asp-action="Contact">KONTAKT</a>
+                </div>
+                <div class="full-left mt-2">
+                    <a class="text-light" asp-controller="Home" asp-action="Rules">ZASADY I REGULACJE</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer__links small2">
+            <div class="full justify__footer">
+                <div class="small">Praca inżynierska WSB Merito<br /> Autorzy: <br />Patrycja Wojtczak <br />Grzegorz Wanat<br />Mateusz Uryzaj</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+

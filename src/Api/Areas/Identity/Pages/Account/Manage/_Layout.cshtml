@@ -1,0 +1,24 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout!;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<div class="subpage__frame mt-5">
+        <div class="user__panel__menu">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="user__panel__options">
+                <div id="right__nav" class="user__panel__nav__holder__right">
+                     @RenderBody()
+                </div>
+        </div>
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
+</div>

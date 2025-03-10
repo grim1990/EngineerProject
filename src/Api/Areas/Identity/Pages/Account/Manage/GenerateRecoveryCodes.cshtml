@@ -1,0 +1,29 @@
+﻿@page
+@model GenerateRecoveryCodesModel
+@{
+    ViewData["Title"] = "PANEL UŻYTKOWNIKA";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="form__section">
+    <h3 class="standard__header mb-4">WYGENERUJ KODY ODZYSKIWANIA KONTA</h3>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Przechowuj te klucze w bezpiecznym miejscu.</strong>
+    </p>
+    <p>
+        Utrata dostępu do urządzenia uwierzytelniającego oraz kluczy odzyskiwania spowoduje utratę dostępu do konta. 
+    </p>
+    <p>
+        Wygenerowanie nowych kodów odzyskiwania nie zmieni kluczy używanych w aplikacji uwierzytelniającej. Jeśli chcesz zmienić klucze użyte w aplikacji  
+        <a asp-page="./ResetAuthenticator">użyj tej opcji.</a>
+    </p>
+</div>
+<div>
+    <form method="post" class="mt-3">
+        <button class="single center details__button__danger" type="submit">Generuj</button>
+    </form>
+</div>
+</div>

@@ -1,0 +1,52 @@
+﻿@using Domain.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUserModel> SignInManager
+@inject UserManager<IdentityUserModel> UserManager
+
+<div class="navbar-nav">
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<div id="login__status" class="login__status mt-2">
+			<div id="notification" class="nav-item login__button">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill grey" viewBox="0 0 16 16" onclick="showNotifications(this)">
+					<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z" />
+				</svg>
+				<div id="dot" class="notification-dot"></div>
+				<div id="dropdownHolder" class="dropdown__container">
+					<div id="notificationsContainer" class="dropdown__notifications text-white"></div>
+				</div>
+			</div>
+			<div class="nav-item login__button">
+				<a id="manage" class="nav-link text-dark status__text" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a>
+				<span class="user__status">Użytkownik</span>
+			</div>
+			<div class="nav-item center">
+				<button id="arrow__down" type="button" class="button" onclick="showMenu(this)">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+					</svg>
+				</button>
+				<div class="dropdown__container">
+					<div id="dropdown__menu" class="dropdown__element text-white">
+						<form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+							<button id="logout" type="submit" class="nav-link login__button submenu__text border-0">Wyloguj</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	}
+	else
+	{
+		<div class="login__status">
+			<div class="nav-item login__button margin-right">
+				<a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Rejestracja</a>
+			</div>
+			<div class="nav-item login__button">
+				<a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Logowanie</a>
+			</div>
+		</div>
+	}
+</div>

@@ -1,0 +1,31 @@
+﻿@page
+@model PersonalDataModel
+@{
+    ViewData["Title"] = "PANEL UŻYTKOWNIKA";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+<div class="form__section">
+            <p>
+                Twoje konto zawiera dane osobowe, które zostały nam przekazane podczas tworzenia i konfiguracji konta. W każdej chwili możesz pobrać lub usunąć przechowywane dane.
+            </p>
+            <p>
+                <strong>
+                    Skasowanie tych danych spowoduje trwałe usunięcie konta. Ta operacja jest nieodwracalna. 
+                </strong>
+            </p>
+             <div class="delete__button__section">
+                <div class="single center mt-5 mb-4">
+                    <form id="download-data" asp-page="DownloadPersonalData" method="post">
+                        <div class="form-group">
+                    <button id="update-profile-button" type="submit" class="form__button">Pobierz</button>
+                        </div>
+                    </form>
+                </div>
+        <a id="delete" asp-page="DeletePersonalData" class="single center details__button__danger">Usuń konto</a>
+             </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

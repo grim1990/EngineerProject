@@ -1,0 +1,46 @@
+﻿
+<div class="pos-f-t  w-100 none menu-background fixed">
+    <nav class="navbar navbar-dark nav-blue w-100">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home m-left">
+            <div class="icon__holder__home">
+                <img class="logo__dropdown" src="/logoBM.png" alt="Budget plan icon">
+            </div>
+        </a>
+        <button class="navbar-toggler m-right" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent2" aria-controls="navbarToggleExternalContent2" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+    <div class="collapse collapse-blue absolute-menu" id="navbarToggleExternalContent2">
+        <div class="dropdown__holder">
+            <div class="first__options">
+                <a asp-area="" asp-controller="Operation" asp-action="Index" class="nav-link text-light text-center w-100">
+                    OPERACJE
+                </a>
+                <a asp-area="" asp-controller="Account" asp-action="Index" class="nav-link text-light text-center w-100">
+                    FINANSE
+                </a>
+                <a class="nav-link text-light text-center w-100" asp-area="" asp-controller="Home" asp-action="BudgetPlan">
+                    PLAN BUDŻETU
+                </a>
+                <a class="nav-link text-center text-light w-100" asp-area="" asp-controller="Savings" asp-action="Index">
+                    OSZCZĘDNOŚCI
+                </a>
+                <a class="nav-link text-light text-center w-100" asp-area="" asp-controller="Home" asp-action="BudgetStatus">
+                    BILANS ROCZNY
+                </a>
+            </div>
+            <div class="second__options">
+                <a id="manage2" class="nav-link text-light text-center w-100" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">PANEL UŻYTKOWNIKA</a>
+                <form id="logoutForm" class="nav-item login__button" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="nav-link login__button text-center no-decorations border-0">WYLOGUJ</button>
+                </form>
+            </div>
+            <div class="third__options">
+                <a asp-area="" asp-controller="Home" asp-action="Rules" class="nav-link text-light">
+                    ZASADY I PRYWATNOŚĆ
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

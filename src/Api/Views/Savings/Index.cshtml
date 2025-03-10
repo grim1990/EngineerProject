@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Saving>
+
+@{
+    ViewData["Title"] = "OSZCZĘDNOŚCI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="subpage__frame mt-5">
+	<dic class="saving__info">
+		<div class="text__data mt-4 mb-4">
+			<h5 class="header__data">
+				Wolne środki: <span class="savings"></span>
+			</h5>
+		</div>
+	</dic>
+	<div class="option__section mb-5">
+		<button type="button" class="option__button filter" onclick="location.href='@Url.Action("Create")'">Dodaj nowy cel</button>
+	</div>
+	<div class="small__header__savings mb-5">
+		<h5 class="small__header">
+			MOJE CELE
+		</h5>
+	</div>
+	<div class="table__section">
+		<table class="table">
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr class="finnance__table">
+						<td class="first__savings clickable" onclick="window.location.href = '@Url.Action("Details", "Savings", new { id = item.Id })';">
+							@Html.DisplayFor(modelItem => item.Name)
+						</td>
+						<td class="clickable progress__section sm-none" onclick="window.location.href = '@Url.Action("Details", "Savings", new { id = item.Id })';">
+							<div class="progress sm-none">
+								<progress class="progress-bar sm-none" role="progressbar" value="@(Math.Round((item.Value),0))" max="@(Math.Round((item.AimValue),0))"></progress>
+							</div>
+						</td>
+						<td class="clickable other__savings" onclick="window.location.href = '@Url.Action("Details", "Savings", new { id = item.Id })';">
+							<span class="procent">@(Math.Round((item.Value * 100 / item.AimValue),0)) %</span>
+						</td>
+						<td class="other__savings clickable" onclick="window.location.href = '@Url.Action("Details", "Savings", new { id = item.Id })';">
+							@item.Value zł&nbsp;z @item.AimValue zł
+						</td>
+						<td class="other__savings clickable" onclick="window.location.href = '@Url.Action("Supply", "Savings", new { id = item.Id })';">
+							+
+						</td>
+						<td class="third__cell sm-none">
+							<div class="dropdown">
+								<button class="options__button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+										<path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+									</svg>
+								</button>
+								<div class="dropdown-menu dropdown__bootstrap__options" aria-labelledby="dropdownMenuButton">
+									<a asp-action="Edit" class="text-white submenu__text border-0" asp-route-id="@item.Id">Edytuj</a>
+									<a asp-action="Details" class="text-white submenu__text border-0" asp-route-id="@item.Id">Szczegóły</a>
+									<a asp-action="Delete" class="text-white submenu__text border-0" asp-route-id="@item.Id">Usuń</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script src="~/js/structureChartFetchData.js" asp-append-version="true"></script>
+<script src="~/js/structureChart.js" asp-append-version="true"></script>
+<script src="~/js/Savings/summaryValue.js" asp-append-version="true"></script>
+

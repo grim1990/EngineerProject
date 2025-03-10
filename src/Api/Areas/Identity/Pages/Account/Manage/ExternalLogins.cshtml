@@ -1,0 +1,71 @@
+﻿@page
+@model ExternalLoginsModel
+@{
+    ViewData["Title"] = "Zewnętrzne uwierzytelnienie";
+    ViewData["ActivePage"] = ManageNavPages.ExternalLogins;
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="form__section" id="profile-form" method="post">
+
+    @if (Model.CurrentLogins?.Count > 0)
+    {
+        <h4 class="standard__header mb-4">
+            ZEWNĘTRZNE UWIERZYTELNIENIE
+        </h4>
+        <table class="table">
+            <tbody>
+                @foreach (var login in Model.CurrentLogins)
+                {
+                    <tr class="finnance__table">
+                        <td class="provider__cell" id="@($"login-provider-{login.LoginProvider}")">@login.ProviderDisplayName</td>
+                        <td class="provider__cell__last">
+                            @if (Model.ShowRemoveButton)
+                            {
+                                <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post">
+                                    <div>
+                                        <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                        <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                        <button type="submit" class="btn btn-danger" title="Remove this @login.ProviderDisplayName login from your account">Usuń</button>
+                                    </div>
+                                </form>
+                            }
+                            else
+                            {
+                                @: &nbsp;
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    @if (Model.OtherLogins?.Count > 0)
+    {
+        <h4 class="standard__header mb-4">
+            DODAJ ZEWNĘTRZNE UWIERZYTELNIENIE
+        </h4>
+        <hr />
+        <form id="link-login-form" asp-page-handler="LinkLogin" method="post" class="form-horizontal">
+            <table class="table">
+            <tbody>
+                @foreach (var provider in Model.OtherLogins)
+                {
+                    <tr class="finnance__table">
+                        <td class="provider__cell">@provider.Name</td>
+                        <td class="provider__cell__last">
+                                <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-green " name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">Dodaj</button>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+        </form>
+    }
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

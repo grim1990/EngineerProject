@@ -1,0 +1,22 @@
+﻿@using Domain.Models
+
+@inject SignInManager<IdentityUserModel> SignInManager
+@{
+	var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+<div id="left__nav" class="user__panel__nav__holder">
+	<div class="form__section form__space">
+		<ul class="user__panel__table">
+			<li class="user__panel__button first-button"><a class="nav-link grey button__center @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Zmień dane</a></li>
+			<li class="user__panel__button"><a class="nav-link grey button__center @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Zmień e-mail</a></li>
+			<li class="user__panel__button"><a class="nav-link grey button__center @ManageNavPages.ChangePasswordNavClass(ViewContext)" id="change-password" asp-page="./ChangePassword">Zmień hasło</a></li>
+			@if (hasExternalLogins)
+			{
+				<li id="external-logins" class="user__panel__button"><a id="external-login" class="nav-link grey button__center @ManageNavPages.ExternalLoginsNavClass(ViewContext)" asp-page="./ExternalLogins">Zewnętrzne uwierzytelnienie</a></li>
+			}
+			<li class="user__panel__button"><a class="nav-link grey button__center @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Logowanie dwuetapowe</a></li>
+			<li class="user__panel__button last"><a class="nav-link grey button__center @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Zarządzanie kontem</a></li>
+		</ul>
+	</div>
+</div>
+

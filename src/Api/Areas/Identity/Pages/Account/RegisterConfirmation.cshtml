@@ -1,0 +1,47 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+    ViewData["Title"] = "Potwierdzenie rejestracji";
+}
+
+<partial name="_Dropdown_Menu" />
+<div class="scroll-frame">
+<div class="login__container__smaller">
+    <div class="top__section__upper__home">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home">
+            <div class="icon__holder__home">
+                <img class="logo" src="/logoBM.png" alt="Budget plan icon">
+            </div>
+        </a>
+    </div>
+        <div class="half__image">
+            <img class="full__image__tight" src="/register.png" alt="Budget plan icon">
+        </div>
+</div>
+<div class="login__container__bigger">
+    <div class="row login__section">
+            <section class="login__frame top__spacing">
+            <h2 class="standard__header">Potwierdzenie rejestracji</h2>
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="forgot__password__info mb-3">
+                <h3 class="login__label">
+                    Przesłano link weryfikacyjny na podany adres e-mail. 
+                </h3>
+            </div>
+        </section>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+

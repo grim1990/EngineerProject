@@ -1,0 +1,28 @@
+﻿@page
+@model ShowRecoveryCodesModel
+@{
+    ViewData["Title"] = "KLUCZE UWIERZYTELNIAJĄCE";
+    ViewData["ActivePage"] = "TwoFactorAuthentication";
+}
+
+<partial name="_StatusMessage" for="StatusMessage" />
+<div class="form__section mb-4">
+    <h3>KLUCZE UWIERZYTELNIAJĄCE</h3>
+<div class="alert alert-warning" role="alert">
+    <p>
+        <span class="glyphicon glyphicon-warning-sign"></span>
+        <strong>Przechowuj kody w bezpiecznym miejscu.</strong>
+    </p>
+    <p>
+        Jeśli stracisz dostęp do urządzenia autentykującego oraz kodów odzyskiwania konta utracisz dostęp do aplikacji.
+    </p>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        @for (var row = 0; row < Model.RecoveryCodes.Length; row += 2)
+        {
+            <code class="recovery-code">@Model.RecoveryCodes[row]</code><text>&nbsp;</text><code class="recovery-code">@Model.RecoveryCodes[row + 1]</code><br />
+        }
+    </div>
+</div>
+</div>

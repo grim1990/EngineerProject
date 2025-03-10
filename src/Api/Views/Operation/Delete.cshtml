@@ -1,0 +1,115 @@
+﻿@model 			Operation
+
+@{
+    ViewData["Title"] = "USUŃ OPERACJE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form__container__smaller d-sm-flex d-md-flex d-lg-flex d-xl-none d-xxl-none">
+    <div class="sm-form-holder">
+        <div class="form__frame">
+            <div class="x__section">
+                <a asp-action="Index" class="x-button">X</a>
+            </div>
+            <h5 class="header__data__form mt-4 mb-5">Usuwanie operacji</h5>
+            <dl class="details__section">
+                <dt class="details__row__right">
+                    Wartość
+                </dt>
+                <dd class="details__row__left">
+                    @if (Model.Type == 0)
+                    {
+                        <span class="spend">@Html.DisplayFor(model => model.Value) zł</span>
+                    }
+                    else
+                    {
+                        <span class="income">@Html.DisplayFor(model => model.Value) zł</span>
+                    }
+                </dd>
+                <dt class="details__row__right">
+                    Data
+                </dt>
+                <dd class="details__row__left">
+                    @(Model.CreateDate.ToString("dd.MM.yyyy"))
+                </dd>
+                <dt class="details__row__right">
+                    Opis
+                </dt>
+                <dd class="details__row__left">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="details__row__right">
+                    Konto
+                </dt>
+                <dd class="details__row__left">
+                    @ViewBag.Account
+                </dd>
+                <dt class="details__row__right">
+                    Kategoria
+                </dt>
+                <dd class="details__row__left">
+                    @ViewBag.Category
+                </dd>
+                <div class="delete__button__section">
+                    <div class="single center mt-5 mb-4">
+                        <form asp-action="Delete">
+                            <input type="hidden" asp-for="Id" />
+                            <input type="submit" value="Usuń" class="details__button__danger" />
+                        </form>
+                    </div>
+                    <a class="mb-4 grey" asp-action="Index">Powrót</a>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="standard__form sm-none d-sm-none d-md-none d-lg-none d-xl-flex d-xxl-flex">
+    <div class="form__frame">
+        <div class="x__section">
+            <a asp-action="Index" class="x-button">X</a>
+        </div>
+        <h5 class="header__data__form mt-4 mb-5">Usuwanie operacji</h5>
+        <dl class="details__section">
+            <dt class="details__row__right">
+                Wartość
+            </dt>
+            <dd class="details__row__left">
+                @Html.DisplayFor(model => model.Value)
+            </dd>
+            <dt class="details__row__right">
+                Data
+            </dt>
+            <dd class="details__row__left">
+                @Html.DisplayFor(model => model.CreateDate)
+            </dd>
+            <dt class="details__row__right">
+                Opis
+            </dt>
+            <dd class="details__row__left">
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt class="details__row__right">
+                Konto
+            </dt>
+            <dd class="details__row__left">
+                @ViewBag.Account
+            </dd>
+            <dt class="details__row__right">
+                Kategoria
+            </dt>
+            <dd class="details__row__left">
+                @ViewBag.Category
+            </dd>
+            <div class="delete__button__section">
+                <div class="single center mt-5 mb-4">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Usuń" class="details__button__danger" />
+                    </form>
+                </div>
+                <a class="mb-4 grey" asp-action="Index">Powrót</a>
+            </div>
+        </dl>
+    </div>
+</div>
+

@@ -1,0 +1,134 @@
+﻿@using Domain.Enums
+@using Domain.Entities
+@model Category
+
+@{
+	ViewData["Title"] = "EDYTUJ PODKATEGORIĘ";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form__container__smaller d-sm-flex d-md-flex d-lg-flex d-xl-none d-xxl-none">
+	<div class="sm-form-holder">
+		<div class="row login__section">
+			<section class="login__frame">
+				<form asp-action="Edit" method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Typ
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-4">
+						<select id="TYPE" asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<Types>()"></select>
+						<span asp-validation-for="Type" class="text-danger"></span>
+					</div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Kategoria główna
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-3">
+						@Html.DropDownList("MainCategoryId", (IEnumerable<SelectListItem>)ViewBag.MainCategories, null, new { @class ="form-control" })
+						<span asp-validation-for="MainCategoryId" class="text-danger"></span>
+						<a asp-controller="Maincategory" asp-action="Create" class="control-label italic grey">Dodaj nową kategorię główną.</a>
+					</div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Nazwa
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-3">
+						<input id="NAME" asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="input__label mb-3">
+						<h3 class="login__label">
+							Kwota
+						</h3>
+					</div>
+					<div class="form-floating-sm mb-3">
+						<input id="VALUE" asp-for="Value" class="form-control" />
+						<span asp-validation-for="Value" class="text-danger"></span>
+					</div>
+					<div class="input__label">
+						<h3 class="login__label">
+							Powtarzalność
+						</h3>
+					</div>
+					<div class="form-floating-sm">
+						<input id="ISANNUAL" class="form-check-input" asp-for="IsAnnual" />
+						<label asp-for="IsAnnual" class="control-label m__left-text">Coroczna</label>
+					</div>
+					<div class="form-floating-sm mb-3">
+						<input id="ONEORMONTH" class="form-check-input" asp-for="OneOrMonth" />
+						<label asp-for="OneOrMonth" class="control-label m__left-text">Comiesięczny</label>
+					</div>
+					<div class="mb-3">
+						<button id="login-submit" type="submit" class="w-100 btn btn-lg login__button__main">Zmień</button>
+					</div>
+				</form>
+			</section>
+		</div>
+	</div>
+</div>
+
+<div class="standard__form sm-none d-sm-none d-md-none d-lg-none d-xl-flex d-xxl-flex">
+	<div class="form__frame">
+		<div class="x__section">
+			<a asp-controller="Home" asp-action="BudgetPlan" class="x-button">X</a>
+		</div>
+		<h5 class="header__data__form mt-4 mb-5">Edytuj podkategorię</h5>
+		<form asp-action="Edit" class="form__section">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="form-group half">
+				<label asp-for="Type" class="control-label m__left">Typ</label>
+				<select asp-for="Type" class="form-control dual" asp-items="Html.GetEnumSelectList<Types>()"></select>
+				<span asp-validation-for="Type" class="text-danger"></span>
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group half">
+				<label asp-for="MainCategoryId" class="control-label m__left">Kategoria główna</label>
+				@Html.DropDownList("MainCategoryId", (IEnumerable<SelectListItem>)ViewBag.MainCategories, null, new { @class ="form-control dual" })
+				<span asp-validation-for="MainCategoryId" class="text-danger"></span>
+			</div>
+			<div class="form-group half">
+				<label asp-for="Name" class="control-label m__left">Nazwa</label>
+				<input asp-for="Name" class="form-control dual" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div class="form-group half">
+				<label asp-for="Value" class="control-label m__left">Kwota</label>
+				<input id="VALUE" asp-for="Value" class="form-control dual" />
+				<span asp-validation-for="Value" class="text-danger"></span>
+			</div>
+			<div class="form-group half">
+				<label asp-for="Description" class="control-label m__left">Opis</label>
+				<input id="DESCRIPTION" asp-for="Description" class="form-control dual" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group half">
+				<label asp-for="OneOrMonth" class="control-label m__left">Powtarzalność</label>
+				<div class="checkbox-holder">
+					<div class="w-100 m__left">
+						<input id="ONEORMONTH" class="form-check-input" asp-for="OneOrMonth" />
+						<label asp-for="OneOrMonth" class="control-label">Comiesięczny</label>
+					</div>
+					<div class="w-100 m__left">
+						<input id="ISANNUAL" class="form-check-input" asp-for="IsAnnual" />
+						<label asp-for="IsAnnual" class="control-label">Coroczna</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group mt-4 mb-4">
+				<input type="submit" value="Zmień" class="form__button" />
+			</div>
+		</form>
+	</div>
+
+	@section Scripts {
+		@{
+			await Html.RenderPartialAsync("_ValidationScriptsPartial");
+		}
+	}
+
+</div>

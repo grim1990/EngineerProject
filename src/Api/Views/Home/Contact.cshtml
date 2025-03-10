@@ -1,0 +1,130 @@
+﻿@model IEnumerable<Account>
+
+@{
+	ViewData["Title"] = "ZASADY I PRYWATNOŚĆ";
+}
+
+<div class="subpage__frame mt-5"></div>
+    <div class="table__section mt-5">
+        <div class="dropdown" onclick="arrowRotate(arrow__down1)">
+            <nav class="finnance__table rules__field opposite mt-4 no-margin" data-bs-toggle="collapse" data-bs-target="#first" aria-controls="first" aria-expanded="false" onclick="toggleDropdownContent()">
+                <div>REGULAMIN KORZYSTANIA ZE STRONY</div>
+            <button id="arrow__down1" class="button" type="button" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                </svg>
+            </button>
+            </nav>
+            <div class="collapse mt-4" id="first">
+                <div class="content__container">
+                    <div class="bold">1. Postanowienia ogólne</div>
+                    <p>
+                        Niniejszy regulamin określa zasady korzystania ze strony internetowej Budget Manager, dostępnej pod adresem www.bugdetmanager.pl
+                        Korzystając ze strony internetowej, użytkownik akceptuje postanowienia niniejszego regulaminu oraz zobowiązuje się do przestrzegania jego treści.
+                    </p>
+                </div>
+            </div>
+        </div>
+   </div>
+    <div class="table__section mt-5">
+        <div class="dropdown" onclick="arrowRotate(arrow__down2)">
+            <nav class="finnance__table rules__field opposite mt-4 no-margin" data-bs-toggle="collapse" data-bs-target="#second" aria-controls="second" aria-expanded="false" onclick="toggleDropdownContent()">
+                <div>POLITYKA PRYWATNOŚCI</div>
+                <button id="arrow__down2" class="button" type="button" aria-label="Toggle navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </nav>
+            <div class="collapse mt-4" id="second">
+                <div class="content__container">
+                    <div class="bold">tekst</div>
+                    <p>
+                        tekst
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table__section mt-5">
+        <div class="dropdown" onclick="arrowRotate(arrow__down3)">
+            <nav class="finnance__table rules__field opposite mt-4 no-margin" data-bs-toggle="collapse" data-bs-target="#third" aria-controls="third" aria-expanded="false" onclick="toggleDropdownContent()">
+                <div>ZASADY ANULOWANIA USŁUGI</div>
+                <button id="arrow__down3" class="button" type="button" aria-label="Toggle navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </nav>
+            <div class="collapse mt-4" id="third">
+                <div class="content__container">
+                    <div class="bold">tekst</div>
+                    <p>
+                        tekst
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table__section mt-5">
+        <div class="dropdown" onclick="arrowRotate(arrow__down4)">
+            <nav class="finnance__table rules__field opposite mt-4 no-margin" data-bs-toggle="collapse" data-bs-target="#fourth" aria-controls="fourth" aria-expanded="false" onclick="toggleDropdownContent()">
+                <div>POLITYKA COOKIES</div>
+                <button id="arrow__down4" class="button" type="button" aria-label="Toggle navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </nav>
+            <div class="collapse mt-4" id="fourth">
+                <div class="content__container">
+                    <div class="bold">tekst</div>
+                    <p>
+                        tekst
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table__section mt-5">
+        <div class="dropdown" onclick="arrowRotate(arrow__down5)">
+            <nav class="finnance__table rules__field opposite mt-4 no-margin" data-bs-toggle="collapse" data-bs-target="#fifth" aria-controls="fifth" aria-expanded="false" onclick="toggleDropdownContent()">
+                <div>PRAWA AUTORSKIE</div>
+                <button id="arrow__down5" class="button" type="button" aria-label="Toggle navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </nav>
+            <div class="collapse mt-4" id="fifth">
+                <div class="content__container">
+                    <div class="bold">tekst</div>
+                    <p>
+                        tekst
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table__section mt-5">
+        <div class="dropdown" onclick="arrowRotate(arrow__down6)">
+            <nav class="finnance__table rules__field opposite mt-4 no-margin" data-bs-toggle="collapse" data-bs-target="#sixth" aria-controls="sixth" aria-expanded="false" onclick="toggleDropdownContent()">
+                <div>KONTAKT</div>
+                <button id="arrow__down6" class="button" type="button" aria-label="Toggle navigation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    </svg>
+                </button>
+            </nav>
+            <div class="collapse mt-4" id="sixth">
+                <div class="content__container">
+                    <div class="bold">tekst</div>
+                    <p>
+                        tekst
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/arrowRotate.js"></script>

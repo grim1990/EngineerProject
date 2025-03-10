@@ -1,0 +1,219 @@
+﻿@using Domain.Enums
+@using Domain.Entities
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+
+@model IPagedList<Operation>
+
+@{
+	ViewData["Title"] = "OPERACJE";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	int? categoryId = ViewData["categoryId"] as int?;
+	int? month = ViewData["month"] as int?;
+	int? year = ViewData["year"] as int?;
+	int pageSize = Model.PageSize;
+}
+
+<div class="subpage__frame">
+	<div class="info__section">
+		<div class="chart__field__bar xsm-second">
+			<canvas class="chart" id="incomesChart"></canvas>
+			<div class="chart__text">Struktura wpływów</div>
+		</div>
+		<div class="text__data__operations margin__right__operations xsm-first">
+			<h5 class="header__data m-4">
+				Wpływy:
+			</h5>
+			@if (ViewBag.Incomes == null)
+			{
+				<h4 class="data">
+					0 zł
+				</h4>
+			}
+			else
+			{
+				<h5 class="data">
+					@ViewBag.Incomes zł
+				</h5>
+			}
+		</div>
+		<div class="chart__field__bar xsm-fifth">
+			<canvas class="chart" id="combainedChart"></canvas>
+			<div id="legend__chart" class="chart__text__legend">
+				<div class="box-two margin__right__small"></div><span class="margin__right__small">Wpływy</span>
+				<div class="box-one margin__right__small"></div><span>Wydatki</span>
+			</div>
+		</div>
+		<div class="text__data__operations margin__left__operations xsm-third">
+			<h5 class="header__data m-4">
+				Wydatki:
+			</h5>
+			@if (ViewBag.Spends == null)
+			{
+				<h4 class="data">
+					0 zł
+				</h4>
+			}
+			else
+			{
+				<h4 class="data">
+					@ViewBag.Spends zł
+				</h4>
+			}
+		</div>
+		<div class="chart__field__bar xsm-fourth">
+			<canvas class="chart" id="expensesChart"></canvas>
+			<div class="chart__text">Struktura wydatków</div>
+		</div>
+	</div>
+	<div class="option__section mb-4">
+		<div class="operations__button__holder">
+			<button type="button" class="option__button extra-spacing" onclick="location.href='@Url.Action("CreateSpend", "Operation")'">Dodaj nowy wydatek</button>
+			<button type="button" class="option__button" onclick="location.href='@Url.Action("CreateIncome", "Operation")'">Dodaj nowy wpływ</button>
+		</div>
+		<div class="filter__button">
+			<button type="button" class="option__button filter" onclick="moveMoneyMenu(this)">Filtruj</button>
+		</div>
+	</div>
+</div>
+<div id="move__money" class="move__money__section">
+	<div class="subpage__frame">
+		<form class="filters__holder" asp-controller="Operation" asp-action="Index" method="get" id="filters">
+			<div class="form-group option__button__filter extra-spacing">
+				@Html.DropDownList("categoryId", (SelectList) ViewBag.Categories, "Rodzaj operacji", new { @class = "form-control center" })
+			</div>
+			<div class="form-group option__button__filter extra-spacing">
+				@Html.DropDownList("month", Html.GetEnumSelectList<Months>(), "Miesiąc", new { @class = "form-control center" })
+			</div>
+			<div class="form-group option__button__filter extra-spacing">
+				@Html.DropDownList("year", (SelectList)ViewBag.Years, "Wybierz rok", new { @class = "form-control center" })
+			</div>
+			<div class="submit__holder__filter">
+				<input class="option__button__blue__filter" type="submit" value="Szukaj" />
+			</div>
+			<input type="hidden" name="page" value="@(ViewBag.CurrentPage ?? 1)" />
+			<input type="hidden" name="pageSize" value="@(ViewBag.PageSize ?? 10)" />
+		</form>
+	</div>
+</div>
+<div class="subpage__frame">
+	<table class="table table-shadow mt-4">
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr class="standard__row">
+					<td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+						@foreach (var category in ViewBag.CategoriesArray)
+						{
+							if (item.CategoryId == category.Id)
+							{
+								@category.Name
+							}
+						}
+					</td>
+					@if (item.Type == 0)
+					{
+						<td class="one__fourth spend clickable" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+							@Html.DisplayFor(modelItem => item.Value) zł
+						</td>
+					}
+					else
+					{
+						<td class="one__fourth income clickable" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+							@Html.DisplayFor(modelItem => item.Value) zł
+						</td>
+					}
+					<td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+						@((item.CreateDate).ToString("dd.MM.yyyy"))
+					</td>
+					<td class="one__fourth sm-none">
+						<div class="dropdown">
+							<button class="options__button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+									<path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+								</svg>
+							</button>
+							<div class="dropdown-menu dropdown__bootstrap__options" aria-labelledby="dropdownMenuButton">
+								<a asp-action="Edit" class="text-white submenu__text border-0" asp-route-id="@item.Id">Edytuj</a>
+								<a asp-action="Details" class="text-white submenu__text border-0" asp-route-id="@item.Id">Szczegóły</a>
+								<a asp-action="Delete" class="text-white submenu__text border-0" asp-route-id="@item.Id">Usuń</a>
+							</div>
+						</div>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<div class="pagination__holder">
+		<div class="pagination-size">
+			<select id="pageSizeSelect" name="pageSize" onchange="changePageSize()">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="25">25</option>
+				<option value="50">50</option>
+			</select>
+		</div>
+		<div class="pagination-container">
+			@if (Model.PageCount > 1)
+			{
+				var currentPage = Model.PageNumber;
+				var totalPages = Model.PageCount;
+				var pagesToShow = 3; 
+
+				var startPage = Math.Max(currentPage - (pagesToShow / 2), 1);
+				var endPage = Math.Min(startPage + pagesToShow - 1, totalPages);
+
+				<ul class="pagination">
+					@if (currentPage > 1)
+					{
+						<li class="page-item">
+							<a class="page-link" href="@Url.Action("Index", new { categoryId, month, year, page = currentPage - 1, pageSize = Model.PageSize })">&laquo;</a>
+						</li>
+					}
+
+					@for (var i = startPage; i <= endPage; i++)
+					{
+						<li class="page-item @(i == currentPage ? "active" : "")">
+							<a class="page-link" href="@Url.Action("Index", new { categoryId, month, year, page = i, pageSize = Model.PageSize })">@i</a>
+						</li>
+					}
+
+					@if (currentPage < totalPages)
+					{
+						<li class="page-item">
+							<a class="page-link" href="@Url.Action("Index", new { categoryId, month, year, page = currentPage + 1, pageSize = Model.PageSize })">&raquo;</a>
+						</li>
+					}
+				</ul>
+			}
+		</div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	var pageSizeValue = @Model.PageSize;
+	document.getElementById("pageSizeSelect").value = pageSizeValue;
+
+	function changePageSize() {
+		var newPageSize = document.getElementById("pageSizeSelect").value;
+		var currentUrl = new URL(window.location.href);
+		var currentPage = parseInt(currentUrl.searchParams.get('page'));
+		var totalItemCount = parseInt("@ViewBag.TotalItemCount");
+		var maxPage = Math.ceil(totalItemCount / newPageSize);
+		var newPage = (currentPage <= maxPage) ? currentPage : 1;
+
+		currentUrl.searchParams.set('pageSize', newPageSize);
+		currentUrl.searchParams.set('page', newPage);
+
+		window.location.href = currentUrl.toString();
+	}
+</script>
+
+<script src="~/js/randomChartColors.js" asp-append-version="true"></script>
+<script src="~/js/Operations/incomesAndExpensesFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Operations/incomesChart.js" asp-append-version="true"></script>
+<script src="~/js/Operations/expensesChart.js" asp-append-version="true"></script>
+<script src="~/js/Operations/combinedChart.js" asp-append-version="true"></script>

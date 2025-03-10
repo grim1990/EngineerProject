@@ -1,0 +1,151 @@
+﻿@model IEnumerable<Account>
+
+@{
+	ViewData["Title"] = "FINANSE";
+}
+
+<div class="subpage__frame">
+	<div class="info__section">
+		<div class="text__data sm-first">
+			<h5 class="header__data m-4">
+				Wszystkie&nbsp;środki:
+			</h5>
+			@if (ViewBag.sumAccountsMoney == null)
+			{
+				<h4 class="data">
+					0 zł
+				</h4>
+			}
+			else
+			{
+				<h5 class="data">
+					@ViewBag.sumAccountsMoney zł
+				</h5>
+			}
+		</div>
+		<div class="chart__field__bar sm-fifth">
+			<canvas class="chart" id="combinedChart"></canvas>
+			<script>
+				var accounts = @Html, Raw(Json.Serialize(ViewBag.AccountsValue));
+			</script>
+			<div class="chart__text">Struktura finansów</div>
+		</div>
+		<div class="text__data sm-second">
+			<h5 class="header__data m-4">
+				Oszczędności:
+			</h5>
+			@if (ViewBag.sumBlockade == null)
+			{
+				<h4 class="data">
+					0 zł
+				</h4>
+			}
+			else
+			{
+				<h5 class="data">
+					@ViewBag.sumBlockade zł
+				</h5>
+			}
+		</div>
+		<div class="chart__field__bar sm-sixth">
+			<canvas class="chart" id="accountMoneyToSavingsChart"></canvas>
+			<div id="legend__chart" class="chart__text__legend">
+				<div class="legend__field">
+					<div class="box-one margin__right__small"></div><span class="margin__right__small">Bieżące środki</span>
+				</div>
+				<div class="legend__field">
+					<div class="box-two margin__right__small"></div> <span>Oszczędności</span>
+				</div>
+			</div>
+		</div>
+		<div class="text__data sm-third">
+			<h5 class="header__data m-4">
+				Bieżące&nbsp;środki:
+			</h5>
+			@if ((ViewBag.sumAccountsMoney - ViewBag.sumBlockade) == null)
+			{
+				<h4 class="data">
+					0 zł
+				</h4>
+			}
+			else
+			{
+				<h5 class="data">
+					@(ViewBag.sumAccountsMoney - ViewBag.sumBlockade) zł
+				</h5>
+			}
+		</div>
+	</div>
+
+	<div class="option__section mb-4">
+		<button type="button" class="option__button" onclick="location.href='@Url.Action("Create")'">Utwórz nowe konto</button>
+		<button type="button" class="option__button" onclick="moveMoneyMenu(this)">Przenieś środki</button>
+	</div>
+</div>
+
+<div id="move__money" class="move__money__section">
+	<div class="subpage__frame">
+		<form class="filters__holder" action="Account/Transfer" method="POST">
+			<div class="form-group option__button__filter extra-spacing">
+				@Html.DropDownList("AccountFrom", (SelectList) ViewBag.Accounts, "Konto bazowe", new { @class = "form-control center" })
+			</div>
+			<div class="form-group  option__button__filter extra-spacing">
+				@Html.DropDownList("AccountTo", (SelectList) ViewBag.Accounts, "Konto docelowe", new { @class = "form-control center" })
+			</div>
+			<div class="submit__holder__filter extra-spacing">
+				<input class="option__button__filter" name="value" type="text" />
+			</div>
+			<div class="submit__holder__filter">
+				<input class="option__button__blue__filter" type="submit" value="Wykonaj" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="subpage__frame">
+	<div class="table__section">
+		<table class="table">
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr class="finnance__table v-align">
+						<td class="first__cell clickable v-align" onclick="window.location.href = '@Url.Action("Details", "Account", new { id = item.Id })';">
+							@Html.DisplayFor(modelItem => item.Name)
+						</td>
+						<td class="second__cell clickable align__center" onclick="window.location.href = '@Url.Action("Details", "Account", new { id = item.Id })';">
+							Stan konta <br>	
+							@Html.DisplayFor(modelItem => item.Value) zł
+						</td>
+						<td class="second__cell clickable align__center" onclick="window.location.href = '@Url.Action("Details", "Account", new { id = item.Id })';">
+							Blokady <br>
+							@Html.DisplayFor(modelItem => item.Blockade) zł
+						</td>
+						<td class="second__cell clickable align__center" onclick="window.location.href = '@Url.Action("Details", "Account", new { id = item.Id })';">
+							Dostępne <br>
+							@(item.Value - item.Blockade) zł
+						</td>
+						<td class="third__cell sm-none">
+							<div class="dropdown">
+								<button class="options__button" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+										<path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+									</svg>
+								</button>
+								<div class="dropdown-menu dropdown__bootstrap__options" aria-labelledby="dropdownMenuButton">
+									<a asp-action="Edit" class="text-white submenu__text border-0" asp-route-id="@item.Id">Edytuj</a>
+									<a asp-action="Details" class="text-white submenu__text border-0" asp-route-id="@item.Id">Szczegóły</a>
+									<a asp-action="Delete" class="text-white submenu__text border-0" asp-route-id="@item.Id">Usuń</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script src="~/js/Accounts/combinedChartFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Accounts/combinedChart.js" asp-append-version="true"></script>
+<script src="~/js/Accounts/accountMoneyToSavingsFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Accounts/accountMoneyToSavingsChart.js" asp-append-version="true"></script>

@@ -1,0 +1,122 @@
+﻿@using Domain.Models
+@{
+	ViewData["Title"] = "PANEL GŁÓWNY";
+	var budgetPlan = ViewBag.BudgetPlan as BudgetModel;
+}
+@model IEnumerable<Operation>
+
+
+<div class="subpage__frame">
+	<div class="info__section__main__panel">
+		<div class="chart__field__bar__main__panel__left">
+			<canvas class="chart" id="combinedChart"></canvas>
+			<div class="chart__text">Struktura wydatków</div>
+		</div>
+		<div class="chart__field__bar__main__panel__center">
+			<canvas class="lineChart" id="yearStructureChart"></canvas>
+		</div>
+		<div class="chart__field__bar__main__panel__right">
+			<canvas class="chart" id="incomesChart"></canvas>
+			<div class="chart__text">Realizacja budżetu</div>
+		</div>
+	</div>
+	<div class="main__panel__half mt-4">
+		<div class="small__frame">
+			<div class="half__holder">
+				<h5 class="small__header__button">
+					Ostatnie operacje
+				</h5>
+				<div>
+					<a asp-controller="Operation" asp-action="Index" class="more__button text-light">Wszystkie operacje</a>
+				</div>
+			</div>
+			<table class="table table-shadow mt-4">
+				<thead>
+					<tr>
+						<th>Nazwa</th>
+						<th class="centrum__cell">Data</th>
+						<th class="last__cell">Kwota</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var item in Model)
+					{
+						<tr class="standard__row">
+							<td class="one__fourth clickable" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+								@foreach (var category in ViewBag.CategoriesArray)
+								{
+									if (item.CategoryId == category.Id)
+									{
+										@category.Name
+									}
+								}
+							<td class="one__third clickable centrum__cell" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+									@((item.CreateDate).ToString("dd.MM.yyyy"))
+							</td>
+							@if (item.Type == 0)
+							{
+								<td class="one__third spend clickable last__cell" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+									@Html.DisplayFor(modelItem => item.Value) zł
+								</td>
+							}
+							else
+							{
+								<td class="one__third income clickable last__cell" onclick="window.location.href = '@Url.Action("Details", "Operation", new { id = item.Id })';">
+									@Html.DisplayFor(modelItem => item.Value) zł
+								</td>
+							}
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="main__panel__half mt-4">
+		<h5 class="small__header margin-left2">
+			Realizacja zaplanowanego budżetu
+		</h5>
+		<div class="border__nav">
+			<div class="info__section__main__panel">
+				<div class="chart__field">
+					<canvas id="summaryOperations"></canvas>
+				</div>
+			</div>
+			<h5 class="small__header margin-left2 mt-4">
+				Oszczędności wynikajace z planu budżetu
+			</h5>
+			<div id="chartContainer" class="info__section__main__panel">
+				<div class="chart__field">
+					<canvas id="summaryBarChart"></canvas>
+				</div>
+				<script>
+					var Incomes = @Html.Raw(Json.Serialize(@budgetPlan!.PlannedIncomes));
+					var Spends = @Html.Raw(Json.Serialize(@budgetPlan!.PlannedExpenses));
+				</script>
+				<div class="chart__field">
+					<canvas id="barChart"></canvas>
+				</div>
+				<div class="text__data m-4">
+					<h4 class="data mt-3">
+						@(@budgetPlan.PlannedIncomes - @budgetPlan.PlannedExpenses) zł
+					</h4>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script src="~/js/display.js" asp-append-version="true"></script>
+<script src="~/js/randomChartColors.js" asp-append-version="true"></script>
+<script src="~/js/Operations/incomesAndExpensesFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Operations/incomesChart.js" asp-append-version="true"></script>
+<script src="~/js/Home/barChart.js" asp-append-version="true"></script>
+<script src="~/js/Home/summaryOperationsChartFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Home/summaryOperationsChart.js" asp-append-version="true"></script>
+<script src="~/js/Accounts/combinedChartFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Accounts/combinedChart.js" asp-append-version="true"></script>
+<script src="~/js/Home/yearStructureChartFetchData.js" asp-append-version="true"></script>
+<script src="~/js/Home/yearStructureChart.js" asp-append-version="true"></script>
+
+
+

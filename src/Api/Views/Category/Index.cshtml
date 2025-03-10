@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Podkategorie operacji</h1>
+
+<p>
+    <a asp-action="Create">Dodaj</a>
+</p>
+<table class="table">
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MainCategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OneOrMonth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsAnnual)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

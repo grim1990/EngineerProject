@@ -1,0 +1,98 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = "~/Views/Shared/_Layout_login.cshtml";
+    ViewData["Title"] = "Login -";
+}
+
+    <partial name="_Dropdown_Menu" />
+<div class="scroll-frame">
+    <div class="login__container__smaller">
+        <div class="top__section__upper__home">
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link text-light logo__holder__home">
+                <div class="icon__holder__home">
+                    <img class="logo" src="/logoBM.png" alt="Budget plan icon">
+                </div>
+            </a>
+        </div>
+        <div class="half__image">
+            <img class="margin__image" src="/login.png" alt="Budget plan icon">
+        </div>
+    </div>
+    <div class="login__container__bigger">
+        <div class="row login__section">
+            <section class="login__frame top__spacing">
+                <form id="account" method="post">
+                    <h2 class="standard__header">Logowanie</h2>
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    <div class="input__label mb-3">
+                        <h3 class="login__label">
+                            Email
+                        </h3>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="jankowalski@poczta.pl" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="input__label mb-3">
+                        <h3 class="login__label">
+                            Hasło
+                        </h3>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="**********" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="additional__options mb-3">
+                        <div class="checkbox mb-3">
+                            <label asp-for="Input.RememberMe" class="form-label checkbox-login">
+                                <input class="form-check-input box-login" asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                        <div class="link__section__login">
+                            <p class="grey__link login__link">
+                                <a class="grey" id="forgot-password" asp-page="./ForgotPassword">Przypomnij&nbsp;hasło</a>
+                            </p>
+                            <p class="grey__link login__link">
+                                <a class="grey" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Zarejestruj&nbsp;się</a>
+                            </p>
+                            <p class="grey__link login__link">
+                                <a class="grey" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Ponownie wyślij mail weryfikujący</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="login-submit" type="submit" class="w-100 btn btn-lg login__button__main">Zaloguj</button>
+                    </div>
+                </form>
+                <h5 class="standard__subheader mt-3">lub</h5>
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal mt-3">
+                    @foreach (var provider in Model.ExternalLogins!)
+                    {
+                        <button type="submit" class="w-100 btn btn-lg login__button__google" name="provider" value="@provider.Name">
+                            <img class="google-icon" src="https://scontent.xx.fbcdn.net/v/t1.15752-9/368114034_1354428622167459_7408555853430575749_n.png?stp=dst-png_p2048x2048&_nc_cat=100&ccb=1-7&_nc_sid=510075&_nc_ohc=tHAMsdS160EAX8kps_C&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AdTt0S9qIHlL4sMFzMQpXV0MqjLmQlNoEmU2p5AP9qphPg&oe=65BD4FC3" />
+                            <p class="google-text">Zaloguj się z użyciem konta Google</p>
+                            <p class="google-text-sm">Użyj konta Google</p>
+                        </button>
+                    }
+                </form>
+            </section>
+        </div>
+
+        @section Scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+
